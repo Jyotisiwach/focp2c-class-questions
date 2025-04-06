@@ -1,0 +1,27 @@
+#include <iostream>
+using namespace std;
+
+class student {
+private:
+    int rollno;
+    string name;
+    float marks;
+public:
+    student(string n, int r, float m) {
+        name = n;
+        rollno = r;
+        marks = m;
+    }
+
+    void display() {
+        cout << "Name: " << name << endl;
+        cout << "Roll No: " << rollno << endl;
+        cout << "Marks: " << marks << endl;
+    }
+};
+
+int main() {
+    student s1("Coding levelup", 98, 68); // only 3 arguments passed
+    cout << "Student Info:" << endl;
+    s1.display();
+}
