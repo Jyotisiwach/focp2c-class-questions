@@ -1,0 +1,160 @@
+#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+
+// Student class
+class Student {
+private:
+    int rollNumber;
+    string name;
+    int age;
+    string course;
+
+public:
+    // Constructor
+    Student(int r, string n, int a, string c) {
+        rollNumber = r;
+        name = n;
+        age = a;
+        course = c;
+    }
+
+    // Getters
+    int getRollNumber() const {
+        return rollNumber;
+    }
+
+    void displayInfo() const {
+        cout << "Roll Number: " << rollNumber << endl;
+        cout << "Name: " << name << endl;
+        cout << "Age: " << age << endl;
+        cout << "Course: " << course << endl;
+    }
+
+    // Setters
+    void updateInfo(string newName, int newAge, string newCourse) {
+        name = newName;
+        age = newAge;
+        course = newCourse;
+    }
+};
+
+// Student Management class
+class StudentManagement {
+private:
+    vector<Student> students;
+
+public:
+    void addStudent() {
+        int roll;
+        string name;
+        int age;
+        string course;
+
+        cout << "Enter Roll Number: ";
+        cin >> roll;
+        cin.ignore();
+        cout << "Enter Name: ";
+        getline(cin, name);
+        cout << "Enter Age: ";
+        cin >> age;
+        cin.ignore();
+        cout << "Enter Course: ";
+        getline(cin, course);
+
+        Student newStudent(roll, name, age, course);
+        students.push_back(newStudent);
+        cout << "Student added successfully!\n";
+    }
+
+    void displayAllStudents() {
+        if (students.empty()) {
+            cout << "No student records found.\n";
+            return;
+        }
+
+        for (const auto& student : students) {
+            student.displayInfo();
+            cout << "----------------------\n";
+        }
+    }
+
+    void searchStudent() {
+        int roll;
+        cout << "Enter Roll Number to search: ";
+        cin >> roll;
+
+        for (const auto& student : students) {
+            if (student.getRollNumber() == roll) {
+                student.displayInfo();
+                return;
+            }
+        }
+        cout << "Student not found.\n";
+    }
+
+    void updateStudent() {
+        int roll;
+        cout << "Enter Roll Number to update: ";
+        cin >> roll;
+
+        for (auto& student : students) {
+            if (student.getRollNumber() == roll) {
+                string newName, newCourse;
+                int newAge;
+                cin.ignore();
+                cout << "Enter New Name: ";
+                getline(cin, newName);
+                cout << "Enter New Age: ";
+                cin >> newAge;
+                cin.ignore();
+                cout << "Enter New Course: ";
+                getline(cin, newCourse);
+                student.updateInfo(newName, newAge, newCourse);
+                cout << "Student updated successfully!\n";
+                return;
+            }
+        }
+        cout << "Student not found.\n";
+    }
+
+    void deleteStudent() {
+        int roll;
+        cout << "Enter Roll Number to delete: ";
+        cin >> roll;
+
+        for (auto it = students.begin(); it != students.end(); ++it) {
+            if (it->getRollNumber() == roll) {
+                students.erase(it);
+                cout << "Student deleted successfully!\n";
+                return;
+            }
+        }
+        cout << "Student not found.\n";
+    }
+};
+
+// Main function with menu
+int main() {
+    StudentManagement sm;
+    int choice;
+
+    do {
+        cout << "\n--- Student Management System ---\n";
+        cout << "1. Add Student\n";
+        cout << "2. Display All Students\n";
+        cout << "3. Search Student\n";
+        cout << "4. Update Student\n";
+        cout << "5. Delete Student\n";
+        cout << "0. Exit\n";
+        cout << "Enter choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                sm.addStudent();
+                break;
+            case 2:
+                sm.displayAllStudents();
+                break;
